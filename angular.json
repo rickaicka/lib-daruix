@@ -2,5 +2,163 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "projects",
-  "projects": {}
+  "projects": {
+    "lib-daruix": {
+      "projectType": "library",
+      "root": "projects/lib-daruix",
+      "sourceRoot": "projects/lib-daruix/src",
+      "prefix": "drx",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/lib-daruix/tsconfig.lib.json",
+            "project": "projects/lib-daruix/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/lib-daruix/src/test.ts",
+            "tsConfig": "projects/lib-daruix/tsconfig.spec.json",
+            "karmaConfig": "projects/lib-daruix/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/lib-daruix/tsconfig.lib.json",
+              "projects/lib-daruix/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "tester-daruix": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/tester-daruix",
+      "sourceRoot": "projects/tester-daruix/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/tester-daruix",
+            "index": "projects/tester-daruix/src/index.html",
+            "main": "projects/tester-daruix/src/main.ts",
+            "polyfills": "projects/tester-daruix/src/polyfills.ts",
+            "tsConfig": "projects/tester-daruix/tsconfig.app.json",
+            "aot": false,
+            "assets": [
+              "projects/tester-daruix/src/favicon.ico",
+              "projects/tester-daruix/src/assets"
+            ],
+            "styles": [
+              "projects/tester-daruix/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/tester-daruix/src/environments/environment.ts",
+                  "with": "projects/tester-daruix/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "tester-daruix:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "tester-daruix:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "tester-daruix:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/tester-daruix/src/test.ts",
+            "polyfills": "projects/tester-daruix/src/polyfills.ts",
+            "tsConfig": "projects/tester-daruix/tsconfig.spec.json",
+            "karmaConfig": "projects/tester-daruix/karma.conf.js",
+            "assets": [
+              "projects/tester-daruix/src/favicon.ico",
+              "projects/tester-daruix/src/assets"
+            ],
+            "styles": [
+              "projects/tester-daruix/src/styles.scss"
+            ],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/tester-daruix/tsconfig.app.json",
+              "projects/tester-daruix/tsconfig.spec.json",
+              "projects/tester-daruix/e2e/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/tester-daruix/e2e/protractor.conf.js",
+            "devServerTarget": "tester-daruix:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "tester-daruix:serve:production"
+            }
+          }
+        }
+      }
+    }},
+  "defaultProject": "lib-daruix"
 }

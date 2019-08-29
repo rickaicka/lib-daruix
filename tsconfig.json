@@ -17,7 +17,15 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "lib-daruix": [
+        "dist/lib-daruix"
+      ],
+      "lib-daruix/*": [
+        "dist/lib-daruix/*"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
